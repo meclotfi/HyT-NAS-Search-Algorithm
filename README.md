@@ -15,6 +15,8 @@ You can run the method on our search space using the notebook run_method.ipynb, 
 Our strategy allows fast convergence with minimum evaluations, especially on huge search spaces.
 The Figure below shows the pipeline of our search algorithm:
 
+![alt text](https://github.com/meclotfi/HyT-NAS-Search-Algorithm/blob/main/assets/SA.png?raw=true)
+
 • First, an initial population of architectures A0 = {a1, ..., an} is sampled via latent hyperbolic sampling [].
 the elements of the population will then be evaluated to construct a dataset D = (a1, y1), ..., (an, yn) where
 yi is a tuple containing the accuracy and latency of the architecture ai. the dataset will grow incrementally
