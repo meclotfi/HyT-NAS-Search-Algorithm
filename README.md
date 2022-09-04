@@ -3,7 +3,7 @@
 This repos contain the search strategy used by our method HyT-NAS to search for tiny and edge hybrid attention and convolution architectures,
 This search strategy is an optimized multi-objective bayesian optimization (MOBO) For fast convergence. 
 
-We have used in this repos the [DGEMO](https://github.com/yunshengtian/DGEMO) implementation of MOBO method and added multiple component to it like: 
+We have used in this repos the [DGEMO](https://github.com/yunshengtian/DGEMO) implementation of MOBO method and added multiple component to it: 
 - New surrogate models (Neural Networks, XgBoost, Bayasian Neural Networks ,ect)
 - New selection strategies (Non dominated sorting ,etc).
 - New sampling methods (Beta, Clustering ,etc).
