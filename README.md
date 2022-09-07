@@ -1,6 +1,6 @@
 # HyT-NAS-Search-Algorithm
- 
-This repos contain the search strategy used by our method HyT-NAS to search for tiny and edge hybrid attention and convolution architectures,
+ <img src="https://github.com/meclotfi/HyT-NAS-Search-Algorithm/blob/main/assets/motivation.png" width="50%" align="right"/>
+This project contains the search strategy used by our method HyT-NAS. HyT-NAS automates the search for tiny and edge hybrid attention and convolution architectures.
 This search strategy is an optimized multi-objective bayesian optimization (MOBO) For fast convergence. 
 
 We have used in this repos the [DGEMO](https://github.com/yunshengtian/DGEMO) implementation of MOBO method and added multiple component to it: 
@@ -8,10 +8,12 @@ We have used in this repos the [DGEMO](https://github.com/yunshengtian/DGEMO) im
 - New selection strategies (Non dominated sorting ,etc).
 - New sampling methods (Beta, Clustering ,etc).
 
-## Run the method 
-You can run the method on our search space using the notebook run_method.ipynb, you can also adapt the method to any search space by adapting the Problem Folder according to your respresenations and method of evaluation. you can also change the components of the strtegy using the algorithm.py file
+The promise of HyT-NAS is to offer a simple yet efficient strategy to take hybrid convolution and attention -based networks from the cloud realm up to the tiny limit. 
 
-## How our startegy works
+## Run the method 
+You can run the method on our search space following the notebook run_method.ipynb, you can also adapt the method to any search space by adapting the Problem Folder according to your respresenations and method of evaluation. you can also change the components of the strtegy using the algorithm.py file
+
+## How it works
 Our strategy allows fast convergence with minimum evaluations, especially on huge search spaces.
 The Figure below shows the pipeline of our search algorithm:
 
@@ -30,24 +32,10 @@ solver. the optimal points found by the solver will go through a selection proce
 Volume Improvement (HVI). this selection will result in the construction of the new population Ai that will be
 evaluated and added to the dataset D.
 
-__Surrogate model__: In the standard pipeline, MOBO methods use the Gaussian process (GP) as a surrogate to model
-each objective independently. GPs are known for their low performance on high dimensional data (d>10) and their poor
-scalability with respect to the number of evaluations, which make them unsuitable for our problem. Thus, we replace them
-with a set of rank predictors of different depths and widths.  Rank predictors are models that tries to rank the values of the target instead of approximating it. These models are trained at each iteration on all previously evaluated architectures (D).
-then, the average and the standard deviation of the network’s predictions are used to approximate the rank of the objectives
-via an acquisition function.
+# Additional Results
 
-__Acquisition function__: a function that assigns a score to each probable observation based on its likelihood of assisting the
-optimization objective. Points that are judged promising by this function are most likely to be selected by the multi-
-objective solver to be part of the next population. The most common acquisition functions used in literature include ex-
-pected improvement (EI), probability of improvement (PI), and upper confidence bound (UCB). The latter is the one we
-choose in our search strategy.
+<img src="https://github.com/meclotfi/HyT-NAS-Search-Algorithm/blob/main/assets/detect.png" width="50%" align="right"/>
+Our study includes object detection models. These models usually involves a backbone, a neck and a head. **The backbone** extracts multi-resolution features from the input image. **The neck** will then aggregates these features. **The head** generates the final predictions. 
+We analyzed the execution time of various models on a Raspberry Pi to know where the focus on optimization is required. 
 
-__Multi-objective solver__: the solver is used to find solutions to the surrogate problem defined as optimizing the acquisition
-function. For that we use the evolutionary algorithm NSGA2. the output of the solver is the population produced by the last
-generation of NSGA2. This output is then transferred to the selection strategy.
-
-__Selection strategy__: Our selection strategy involves two steps: First, points obtained from the solver are sorted using non-
-dominated sorting algorithm, Then, the points belongs to the two first dominance levels are passed to the second selection
-phase based on hyper-volume improvement where the next population is constructed iteratively by selecting the point with
-the biggest hypervolume improvement each time. 
+The figure on the right shows how the backbone represents the main overhead for the latency of the models.
